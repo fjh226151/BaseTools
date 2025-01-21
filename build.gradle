@@ -1,15 +1,26 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.2'
+    }
+}
+
 plugins {
     id("com.android.library")
     id("maven-publish")
 }
+
 group = 'com.github.fjh226151'
+
 android {
     namespace 'com.hongxing.basetools'
     compileSdk 34
 
     defaultConfig {
         minSdk 24
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -20,20 +31,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
-
 publishing {
     publications {
         release(MavenPublication) {
             from components.findByName('release')
+
             groupId = 'com.github.fjh226151'
             artifactId = 'BaseTools'
-            version = '1.0'
+            version = '1.0.1'
         }
     }
     repositories {
@@ -42,6 +54,7 @@ publishing {
         }
     }
 }
+
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
