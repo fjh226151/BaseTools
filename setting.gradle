@@ -1,0 +1,7 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()  // Gradle 插件门户
+        google()  // Google 的 Maven 仓库
+        mavenCentral()  // Maven Central 仓库
+    }
+}

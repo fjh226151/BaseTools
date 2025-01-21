@@ -3,7 +3,7 @@ jdk:
 
 gradle:
   version: 7.0.2
-  command: build publishToMavenLocal
+  command: build  build publish
 
 before_install:
   - echo "Running before install script"

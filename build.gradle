@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.2'
+        classpath 'com.android.tools.build:gradle:8.1.0'
     }
 }
 
@@ -30,31 +30,48 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-}
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()  // 为 release 变体生成源码 JAR 文件
+            withJavadocJar()  // 为 release 变体生成 Javadoc JAR 文件
+        }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            from components.findByName('release')
-
-            groupId = 'com.github.fjh226151'
-            artifactId = 'BaseTools'
-            version = '1.0.1'
+        multipleVariants {
+            withSourcesJar()  // 为所有变体生成源码 JAR 文件
+            withJavadocJar()  // 为所有变体生成 Javadoc JAR 文件
+            allVariants()     // 发布所有变体
         }
     }
-    repositories {
-        maven {
-            url = uri("https://jitpack.io")
+
+}
+afterEvaluate {
+    publishing {
+
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.github.fjh226151'
+                artifactId = 'BaseTools'
+                version = '1.0.31'
+                from components.release
+            }
+        }
+        repositories {
+            maven {
+                url = uri("https://jitpack.io")
+            }
         }
     }
 }
-
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
