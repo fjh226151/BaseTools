@@ -1,0 +1,54 @@
+plugins {
+    alias(libs.plugins.android.library)
+   // alias(libs.plugins.android.maven)
+    id("maven-publish")
+}
+group = 'com.github.baseTools'
+android {
+    namespace 'com.hongxing.basetools'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            from components.findByName('release')
+
+            groupId = 'com.github.BaseTools'
+            artifactId = 'androidbase'
+            version = '1.0'
+        }
+    }
+    repositories {
+        maven {
+            url = uri("https://jitpack.io")
+        }
+    }
+}
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}
