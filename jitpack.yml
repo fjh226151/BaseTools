@@ -1,0 +1,12 @@
+jdk:
+  - openjdk11
+
+gradle:
+  version: 7.0.2
+  command: build publishToMavenLocal
+
+before_install:
+  - echo "Running before install script"
+
+env:
+  MY_ENV_VAR: "value"
